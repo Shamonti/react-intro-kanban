@@ -48,7 +48,16 @@ const highPriorityIcon = (
     <path d="M6 15l6-6 6 6" />
   </svg>
 );
-const TaskCard = ({ task }: { task: Task }) => {
+
+const TaskCard = ({
+  task,
+  updateTaskPoints,
+}: {
+  task: Task;
+  updateTaskPoints: (task: Task, points: number) => void;
+}) => {
+  const points = task.points || 0;
+
   return (
     <div>
       <div className="m-2 w-56 rounded-lg border bg-gray-50 px-2">
@@ -62,7 +71,15 @@ const TaskCard = ({ task }: { task: Task }) => {
               {task.priority === 'low' && highPriorityIcon}
             </div>
           </div>
-          <div>{task.points}</div>
+          <div className="flex items-center gap-2">
+            <button onClick={() => updateTaskPoints(task, points - 1)}>
+              -
+            </button>
+            <div className="font-semibold">{points}</div>
+            <button onClick={() => updateTaskPoints(task, points + 1)}>
+              +
+            </button>
+          </div>
         </div>
       </div>
     </div>
