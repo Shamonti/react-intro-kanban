@@ -57,6 +57,18 @@ const TaskCard = ({
   updateTaskPoints: (task: Task, points: number) => void;
 }) => {
   const points = task.points || 0;
+  const updatePoints = (direction: 'up' | 'down') => {
+    // if (points < 0) return;
+    // if (points > 13) return;
+
+    const fib = [0, 1, 3, 5, 8, 13];
+    const index = fib.indexOf(points);
+    const nextIndex = direction === 'up' ? index + 1 : index - 1;
+    const newPoints = fib[nextIndex];
+    if (newPoints) {
+      updateTaskPoints(task, newPoints);
+    }
+  };
 
   return (
     <div>
@@ -72,13 +84,9 @@ const TaskCard = ({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => updateTaskPoints(task, points - 1)}>
-              -
-            </button>
+            <button onClick={() => updatePoints('down')}>-</button>
             <div className="font-semibold">{points}</div>
-            <button onClick={() => updateTaskPoints(task, points + 1)}>
-              +
-            </button>
+            <button onClick={() => updatePoints('up')}>+</button>
           </div>
         </div>
       </div>
